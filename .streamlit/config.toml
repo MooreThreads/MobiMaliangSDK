@@ -1,0 +1,9 @@
+[server]
+maxUploadSize = 5
+
+[theme]
+base = 'dark'
+primaryColor = '#FF671D'
+
+[browser]
+gatherUsageStats = false

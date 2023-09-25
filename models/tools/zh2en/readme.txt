@@ -1,0 +1,1 @@
+请下载 https://huggingface.co/Helsinki-NLP/opus-mt-zh-en/blob/main/pytorch_model.bin，并放至 models/tools/zh2en/

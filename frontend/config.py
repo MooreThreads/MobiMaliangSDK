@@ -1,0 +1,5 @@
+NEED_SAFETY = False
+SAMPLER = "DDIM"
+MAX_SIZE = 768
+DEBUG = True
+FREE_HW = True
