@@ -31,7 +31,6 @@
 ```
 git clone https://github.com/MooreThreads/MobiMaliangSDK;cd MobiMaliangSDK
 ```
-
 ### 1.2. 安装驱动
 
 输入以下命令，将会安装驱动 `musa_2.1.1-Ubuntu-dev_amd64.deb`
@@ -59,7 +58,6 @@ Conflicts: mtsnd, mtgpu, musa-wine, musa_all-in-one
 Description: Moore Threads MUSA driver
 Homepage: https://developer.mthreads.com/
 ```
-
 ### 1.3. 开发者账号
 
 请向 `developers@mthreads.com` 发送邮件，提供姓名、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
@@ -114,7 +112,6 @@ cd /mtai_workspace/MobiMaliangSDK/
 apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 pip install -r requirements.txt --no-deps
 ```
-
 ### 1.5. 启动 WebUI
 
 如果在容器外面，确认命令行前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`，输入以下命令以进入容器
