@@ -139,7 +139,7 @@ streamlit run frontend/main.py --server.port 1001
 - `sudo docker stop container_name`：停止名为 `container_name` 的容器
 
 ##  2. <a name='models'></a>模型下载
-- Stable Diffusion: 生图底模，ckpt和safetensors皆可，可从tusi.art、civitai.com等网站下载，例如[GhostMix2.0](https://tusi.art/models/601380436024757697)，下载后放至`models/Stable-diffusion/`
+- Stable Diffusion: 生图底模，ckpt和safetensors皆可，可从tusiart.com、civitai.com等网站下载，例如[GhostMix2.0](https://tusiart.com/models/601380436024757697)，下载后放至`models/Stable-diffusion/`
 - Controlnet: 
   - [canny](https://huggingface.co/lllyasviel/control_v11p_sd15_canny/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet边缘控制生成，下载后放至`models/controlnet/canny_v11/`，并命名为`diffusion_pytorch_model.safetensors`
   - [openpose](https://huggingface.co/lllyasviel/control_v11p_sd15_openpose/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet骨骼控制生成，下载后放至`models/controlnet/openpose_v11/`，并命名为`diffusion_pytorch_model.safetensors`
@@ -147,7 +147,7 @@ streamlit run frontend/main.py --server.port 1001
   - [mlsd](https://huggingface.co/lllyasviel/control_v11p_sd15_mlsd/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet边线控制生成，下载后放至`models/controlnet/mlsd_v11/`，并命名为`diffusion_pytorch_model.safetensors`
   - 骨骼检测模型：[body_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/body_pose_model.pth)、[facenet.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/facenet.pth)、[hand_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/hand_pose_model.pth)，分别实现全身、面部、手部的检测，下载后放至`models/controlnet/annotators/`
   - 边线检测模型：[mlsd_large_512_fp32.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/mlsd_large_512_fp32.pth)，下载后放至`models/controlnet/annotators/`
-- LoRA: safetensors格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/lora/`
+- LoRA: safetensors格式，可从tusiart.com、civitai.com等网站下载，下载后放至`models/lora/`
 - Textural Inversion：pt格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/embeddings/`
 - 超分: [RealESRGAN_x4plus](https://github.com/xinntao/Real-ESRGAN)，更多下载链接：[https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth](https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth)，下载后放至`models/tools/`
 - 图生文本：[DeepDanbooru](https://github.com/KichangKim/DeepDanbooru)，更多下载链接：[https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt](https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt)，下载后放至`models/tools/`
