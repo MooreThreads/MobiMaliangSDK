@@ -60,7 +60,7 @@ Homepage: https://developer.mthreads.com/
 ```
 ### 1.3. 开发者账号
 
-请向 `developers@mthreads.com` 发送邮件，提供姓名、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
+请向 `developers@mthreads.com` 发送邮件，提供姓名、手机号、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
 
 申请成功后，请编辑 `install.sh` [第19行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install.sh#L19)，并替换`账号`和`密码`
 
