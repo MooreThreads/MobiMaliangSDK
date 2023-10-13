@@ -78,7 +78,8 @@ sudo bash install.sh
 
 如果系统语言为中文，即命令行中 `Desktop` 显示为 `桌面` ，则运行 `sudo bash install_cn.sh`
 
-以上安装文件将依次完成以下内容：
+<details>
+<summary>以上安装文件将依次完成以下内容</summary>
 
 - 下载 [sgpu-dkms](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/sgpu-dkms_1.1.1.deb)、[mtml](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/mtml_1.5.0.deb)、[container toolkit](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/mt-container-toolkit_1.5.0.deb) 并安装
 
@@ -104,14 +105,13 @@ sudo docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:lat
 docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
 docker exec -it mtai_workspace /bin/bash
 ```
+</details>
 
-此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下四行命令，完成安装，其中第一行进入到项目目录，第二行安装容器系统依赖，第三行安装项目依赖，第四行将需要用到的CLIP模型配置文件复制到系统默认目录
+此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下两行命令完成安装，其中第一行进入到项目目录，第二行完成容器内安装任务
 
 ```
 cd /mtai_workspace/MobiMaliangSDK/
-apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
-pip install -r requirements.txt --no-deps
-mkdir ~/.cache/huggingface/hub/;rm -rf ~/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/;cp -r models/tools/models--openai--clip-vit-large-patch14/ ~/.cache/huggingface/hub
+sudo bash install_inside_docker.sh
 ```
 
 ### 1.5. 启动 WebUI
