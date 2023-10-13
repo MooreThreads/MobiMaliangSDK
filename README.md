@@ -105,12 +105,13 @@ docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=al
 docker exec -it mtai_workspace /bin/bash
 ```
 
-此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下三行命令，完成安装，其中第一行进入到项目目录，第二行安装容器系统依赖，第三行安装项目依赖
+此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下四行命令，完成安装，其中第一行进入到项目目录，第二行安装容器系统依赖，第三行安装项目依赖，第四行将需要用到的CLIP模型配置文件复制到系统默认目录
 
 ```
 cd /mtai_workspace/MobiMaliangSDK/
 apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 pip install -r requirements.txt --no-deps
+rm -rf ~/.cache/huggingface/hub;cp -r models/tools/models--openai--clip-vit-large-patch14/ ~/.cache/huggingface/hub
 ```
 ### 1.5. 启动 WebUI
 
