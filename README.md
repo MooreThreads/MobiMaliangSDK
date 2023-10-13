@@ -111,8 +111,9 @@ docker exec -it mtai_workspace /bin/bash
 cd /mtai_workspace/MobiMaliangSDK/
 apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 pip install -r requirements.txt --no-deps
-rm -rf ~/.cache/huggingface/hub;cp -r models/tools/models--openai--clip-vit-large-patch14/ ~/.cache/huggingface/hub
+mkdir ~/.cache/huggingface/hub/;rm -rf ~/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/;cp -r models/tools/models--openai--clip-vit-large-patch14/ ~/.cache/huggingface/hub
 ```
+
 ### 1.5. 启动 WebUI
 
 如果在容器外面，确认命令行前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`，输入以下命令以进入容器
