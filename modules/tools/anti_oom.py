@@ -113,7 +113,7 @@ class AntiOOMUNet2DConditionModel(torch.nn.Module):
                         cross_attention_kwargs=cross_attention_kwargs,
                         added_cond_kwargs=added_cond_kwargs,
                         down_block_additional_residuals=down_block_additional_residuals_half1,
-                        mid_block_additional_residual=mid_block_additional_residual[:half_bs],
+                        mid_block_additional_residual=mid_block_additional_residual[:half_bs] if mid_block_additional_residual is not None else None,
                         encoder_attention_mask=encoder_attention_mask,
                         return_dict=return_dict,
                     )
@@ -128,7 +128,7 @@ class AntiOOMUNet2DConditionModel(torch.nn.Module):
                         cross_attention_kwargs=cross_attention_kwargs,
                         added_cond_kwargs=added_cond_kwargs,
                         down_block_additional_residuals=down_block_additional_residuals_half2,
-                        mid_block_additional_residual=mid_block_additional_residual[half_bs:],
+                        mid_block_additional_residual=mid_block_additional_residual[half_bs:] if mid_block_additional_residual is not None else None,
                         encoder_attention_mask=encoder_attention_mask,
                         return_dict=return_dict,
                     )
@@ -152,7 +152,7 @@ class AntiOOMUNet2DConditionModel(torch.nn.Module):
                 cross_attention_kwargs=cross_attention_kwargs,
                 added_cond_kwargs=added_cond_kwargs,
                 down_block_additional_residuals=down_block_additional_residuals_half1,
-                mid_block_additional_residual=mid_block_additional_residual[:half_bs],
+                mid_block_additional_residual=mid_block_additional_residual[:half_bs] if mid_block_additional_residual is not None else None,
                 encoder_attention_mask=encoder_attention_mask,
                 return_dict=return_dict,
             )
@@ -167,7 +167,7 @@ class AntiOOMUNet2DConditionModel(torch.nn.Module):
                 cross_attention_kwargs=cross_attention_kwargs,
                 added_cond_kwargs=added_cond_kwargs,
                 down_block_additional_residuals=down_block_additional_residuals_half2,
-                mid_block_additional_residual=mid_block_additional_residual[half_bs:],
+                mid_block_additional_residual=mid_block_additional_residual[half_bs:] if mid_block_additional_residual is not None else None,
                 encoder_attention_mask=encoder_attention_mask,
                 return_dict=return_dict,
             )
