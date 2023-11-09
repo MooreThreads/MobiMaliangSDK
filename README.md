@@ -162,10 +162,10 @@ bash install.sh
 ##  3. <a name='-1'></a>模型下载
 - Stable Diffusion: 生图底模，ckpt和safetensors皆可，可从tusi.art、civitai.com等网站下载，例如[GhostMix2.0](https://tusi.art/models/601380436024757697)，下载后放至`models/Stable-diffusion/`
 - Controlnet: 
-  - [canny](https://huggingface.co/lllyasviel/control_v11p_sd15_canny/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet边缘控制生成，下载后放至`models/controlnet/canny_v11/`，并命名为`diffusion_pytorch_model.safetensors`
-  - [openpose](https://huggingface.co/lllyasviel/control_v11p_sd15_openpose/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet骨骼控制生成，下载后放至`models/controlnet/openpose_v11/`，并命名为`diffusion_pytorch_model.safetensors`
-  - [tile](https://huggingface.co/lllyasviel/control_v11f1e_sd15_tile/blob/main/diffusion_pytorch_model.bin)：实现ControlNet Tile精绘功能，下载后放至`models/controlnet/tile_v11/`
-  - [mlsd](https://huggingface.co/lllyasviel/control_v11p_sd15_mlsd/blob/main/diffusion_pytorch_model.fp16.safetensors)：实现ControlNet边线控制生成，下载后放至`models/controlnet/mlsd_v11/`，并命名为`diffusion_pytorch_model.safetensors`
+  - [canny](https://huggingface.co/lllyasviel/sd-controlnet-canny/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet边缘控制生成，下载后放至`models/controlnet/canny_v11/`
+  - [openpose](https://huggingface.co/lllyasviel/sd-controlnet-openpose/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet骨骼控制生成，下载后放至`models/controlnet/openpose_v11/`
+  - [tile](https://huggingface.co/lllyasviel/control_v11f1e_sd15_tile/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet Tile精绘功能，下载后放至`models/controlnet/tile_v11/`
+  - [mlsd](https://huggingface.co/lllyasviel/control_v11p_sd15_mlsd/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet边线控制生成，下载后放至`models/controlnet/mlsd_v11/`
   - 骨骼检测模型：[body_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/body_pose_model.pth)、[facenet.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/facenet.pth)、[hand_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/hand_pose_model.pth)，分别实现全身、面部、手部的检测，下载后放至`models/controlnet/annotators/`
   - 边线检测模型：[mlsd_large_512_fp32.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/mlsd_large_512_fp32.pth)，下载后放至`models/controlnet/annotators/`
 - LoRA: safetensors格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/lora/`
