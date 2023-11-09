@@ -7,11 +7,10 @@
 
 <!-- vscode-markdown-toc -->
 ## 目录
-1. [简易安装](#easy_install)
-2. [详细安装](#detailed_install)
-3. [模型下载](#-1)
-4. [快速上手](#-1)
-5. [马良在线小程序](#-1)
+1. [安装步骤](#install)
+2. [模型下载](#models)
+3. [快速上手](#quick_start)
+4. [线上摩笔马良](#online_service)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -19,7 +18,7 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-##  1. <a name='easy_install'></a>简易安装
+##  1. <a name='install'></a>安装步骤
 
 ### 1.1. 克隆项目
 
@@ -30,9 +29,8 @@
 输入以下命令并回车，将会克隆项目并进入项目文件夹，此时命令行前缀变为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`
 
 ```
-git clone https://github.mthreads.com/mthreads/MobiMaliangSDK;cd MobiMaliangSDK
+git clone https://github.com/MooreThreads/MobiMaliangSDK;cd MobiMaliangSDK
 ```
-
 ### 1.2. 安装驱动
 
 输入以下命令，将会安装驱动 `musa_2.1.1-Ubuntu-dev_amd64.deb`
@@ -60,8 +58,15 @@ Conflicts: mtsnd, mtgpu, musa-wine, musa_all-in-one
 Description: Moore Threads MUSA driver
 Homepage: https://developer.mthreads.com/
 ```
+### 1.3. 开发者账号
 
-### 1.3. 其他安装
+请向 `developers@mthreads.com` 发送邮件，提供姓名、手机号、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
+
+申请成功后，请编辑 `install.sh` [第19行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install.sh#L19)，并替换`账号`和`密码`
+
+如果系统语言为中文，则编辑 `install_ch.sh` [第19行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install_cn.sh#L19)
+
+### 1.4. 其他安装
 
 如果重启了，请打开 `MobiMaliangSDK` 文件夹，点击右键，选择 `Open in Terminal`，以重新进入命令行，前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`
 
@@ -73,7 +78,8 @@ sudo bash install.sh
 
 如果系统语言为中文，即命令行中 `Desktop` 显示为 `桌面` ，则运行 `sudo bash install_cn.sh`
 
-以上安装文件将依次完成以下内容：
+<details>
+<summary>以上安装文件将依次完成以下内容</summary>
 
 - 下载 [sgpu-dkms](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/sgpu-dkms_1.1.1.deb)、[mtml](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/mtml_1.5.0.deb)、[container toolkit](https://mcconline.oss-cn-beijing.aliyuncs.com/software/2023/07/11/mt-container-toolkit_1.5.0.deb) 并安装
 
@@ -82,29 +88,33 @@ sudo dpkg -i mtml_1.5.0.deb sgpu-dkms_1.1.1.deb mt-container-toolkit_1.5.0.deb
 (cd /usr/bin/musa && sudo ./docker setup $PWD)
 ```
 > 具体参考 [摩尔线程容器运行时套件](https://mcconline.mthreads.com/software/1?id=1)
+
 - 登录 docker
 ```bash
-docker login -u {账号} -p {密码} registry.mthreads.com
+docker login -u 账号 -p 密码 registry.mthreads.com
 ```
-如未有账号，可以向 ```developers@mthreads.com``` 发送申请邮件。
-- 拉取 docker 镜像 registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+如未有账号，可以向 `developers@mthreads.com` 发送申请邮件
+
+- 拉取 docker 镜像 registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
 ```bash
-sudo docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+sudo docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
 ```
+
 - 创建容器 `mtai_workspace`并进入
 ```bash
 docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+docker exec -it mtai_workspace /bin/bash
 ```
+</details>
 
-此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下三行命令，完成安装，其中第一行进入到项目目录，第二行安装容器系统依赖，第三行安装项目依赖
+此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下两行命令完成安装，其中第一行进入到项目目录，第二行完成容器内安装任务
 
 ```
 cd /mtai_workspace/MobiMaliangSDK/
-apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
-pip install -r requirements.txt --no-deps
+sudo bash install_inside_docker.sh
 ```
 
-### 1.4. 启动 WebUI
+### 1.5. 启动 WebUI
 
 如果在容器外面，确认命令行前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`，输入以下命令以进入容器
 
@@ -123,44 +133,15 @@ streamlit run frontend/main.py --server.port 1001
 
 如果要停止 WebUI 服务，按 `Ctrl + C` 即可；停止服务后，如果要退出容器，输入 `exit` 即可
 
-### 1.5. 常用 docker 命令
+### 1.6. 常用 docker 命令
 
 - `sudo docker images -a`：查看全部已下载的镜像
 - `sudo docker ps -a`：查看全部容器
 - `sudo docker start container_name`：启动名为 `container_name` 的容器
 - `sudo docker stop container_name`：停止名为 `container_name` 的容器
 
-##  2. <a name='detailed_install'></a>详细安装
-1. 驱动安装
-  - 下载 [MUSA Toolkit](https://new-developer.mthreads.com/sdk/download/musa?equipment=MTT%20S3000&os=Ubuntu%2020.04&driverVersion=musa_2.1.1-Ubuntu-dev_amd64&version=v1.4.0)，在下拉菜单中选择驱动版本为 musa_2.1.1-Ubuntu-dev_amd64
-  - 将下载的文件解压，找到 ```musa_2.1.1-Ubuntu-dev_amd64.deb``` 文件进行安装
-  ```bash
-  sudo dpkg -i musa_2.1.1-Ubuntu-dev_amd64.deb
-  ```
-  - 安装完成后，加载驱动
-  ```bash
-  sudo modprobe mtgpu
-  ```
-2. 创建容器
-```bash
-# 内部地址
-docker pull sh-harbor.mthreads.com/mt-ai/musa-pytorch-release:v0.1.15
-docker run -t --name <你的容器名字> --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 sh-harbor.mthreads.com/mt-ai/musa-pytorch-release:v0.1.15 /bin/bash
-```
-
-3. 克隆项目
-
-```sh
-# 对外需修改
-git clone https://github.mthreads.com/mthreads/MobiMaliangSDK
-```
-4. 安装依赖
-```sh
-cd MobiMaliangSDK
-bash install.sh
-```
-##  3. <a name='-1'></a>模型下载
-- Stable Diffusion: 生图底模，ckpt和safetensors皆可，可从tusi.art、civitai.com等网站下载，例如[GhostMix2.0](https://tusi.art/models/601380436024757697)，下载后放至`models/Stable-diffusion/`
+##  2. <a name='models'></a>模型下载
+- Stable Diffusion: 生图底模，ckpt和safetensors皆可，可从tusiart.com、civitai.com等网站下载，例如[GhostMix2.0](https://tusiart.com/models/601380436024757697)，下载后放至`models/Stable-diffusion/`
 - Controlnet: 
   - [canny](https://huggingface.co/lllyasviel/sd-controlnet-canny/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet边缘控制生成，下载后放至`models/controlnet/canny_v11/`
   - [openpose](https://huggingface.co/lllyasviel/sd-controlnet-openpose/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet骨骼控制生成，下载后放至`models/controlnet/openpose_v11/`
@@ -168,7 +149,7 @@ bash install.sh
   - [mlsd](https://huggingface.co/lllyasviel/control_v11p_sd15_mlsd/resolve/main/diffusion_pytorch_model.bin)：实现ControlNet边线控制生成，下载后放至`models/controlnet/mlsd_v11/`
   - 骨骼检测模型：[body_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/body_pose_model.pth)、[facenet.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/facenet.pth)、[hand_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/hand_pose_model.pth)，分别实现全身、面部、手部的检测，下载后放至`models/controlnet/annotators/`
   - 边线检测模型：[mlsd_large_512_fp32.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/mlsd_large_512_fp32.pth)，下载后放至`models/controlnet/annotators/`
-- LoRA: safetensors格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/lora/`
+- LoRA: safetensors格式，可从tusiart.com、civitai.com等网站下载，下载后放至`models/lora/`
 - Textural Inversion：pt格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/embeddings/`
 - 超分: [RealESRGAN_x4plus](https://github.com/xinntao/Real-ESRGAN)，更多下载链接：[https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth](https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth)，下载后放至`models/tools/`
 - 图生文本：[DeepDanbooru](https://github.com/KichangKim/DeepDanbooru)，更多下载链接：[https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt](https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt)，下载后放至`models/tools/`
@@ -176,10 +157,10 @@ bash install.sh
 
 > 请您在使用推荐的模型前，仔细阅读并理解以下事宜：
 > 1. 推荐的模型为第三方软件或代码库，客户在下载使用推荐的模型时，需要了解并遵守该模型的用户协议或开源协议要求
-> 2. 如果您计划使用推荐的模型，请确保您的使用符合相应的用户协议或开源协议要求。某些开源协议可能对商业化使用有特定的限制或要求您公开源代码等。您需要自行承担了解和遵守这些规定的责任。
-> 3. 公司不对推荐的模型作任何明示或暗示的保证或承诺。在使用这些模型时，您应自行承担风险和责任。公司不承担因使用这些模型而导致的任何直接或间接损失或损害。
+> 2. 如果您计划使用推荐的模型，请确保您的使用符合相应的用户协议或开源协议要求。某些开源协议可能对商业化使用有特定的限制或要求您公开源代码等。您需要自行承担了解和遵守这些规定的责任
+> 3. 公司不对推荐的模型作任何明示或暗示的保证或承诺。在使用这些模型时，您应自行承担风险和责任。公司不承担因使用这些模型而导致的任何直接或间接损失或损害
 
-##  4. <a name='-1'></a>快速上手
+##  3. <a name='quick_start'></a>快速上手
 <details>
 <summary>文生图</summary>
 
@@ -205,7 +186,7 @@ python examples/example_img2img.py --checkpoint_path models/Stable-diffusion/v1-
 # python examples/controlnets/example_canny2img.py --checkpoint_path <your model path> --canny_controlnet_path <your canny controlnet model path> --image_path <your image path> --prompt <your prompt> --output_path <result saved path>
 python examples/controlnets/example_canny2img.py --checkpoint_path models/Stable-diffusion/v1-5-pruned-emaonly.ckpt --canny_controlnet_path models/controlnet/canny_v11 --image_path data/person.jpg --prompt "a pretty girl" --output_path outputs
 ```
-更多的 controlnets 请移步 ```examples/controlnets``` 文件夹。
+更多的 controlnets 请移步 ```examples/controlnets``` 文件夹
 
 </details>
 
@@ -255,25 +236,25 @@ python examples/example_super_resolution.py --checkpoint_path models/tools/reale
 
 ```bash
 # python examples/example_translator.py --checkpoint_path <your model path> --chinese_text <your Chinese text>
-python examples/example_translator.py --checkpoint_path models/tools/zh2en --chinese_text 一个漂亮的小姑娘
+python examples/example_translator.py --checkpoint_path models/tools/zh2en --chinese_text "一个漂亮的小姑娘"
 ```
 
 </details>
 
-##  5. <a name='-1'></a>马良在线小程序
+##  4. <a name='online_service'></a>线上摩笔马良
 
-点击 [链接](https://maliang.mthreads.com/)，体验线上摩笔马良
+点击 [链接](https://maliang.mthreads.com/)，体验摩笔马良线上网站
 <p align="left">
   <img src="assets/imgs/cover.png" width="300
   "/>
 </p> 
 
-或 扫描下方二维码，体验线上马良小程序
+或 扫描下方二维码，体验摩笔马良线上小程序
 
 <p align="left">
   <img src="assets/imgs/mini_program_maliang.png" width="100
   "/>
 </p> 
 
-## 6. FAQ
-如果您有任何问题，可以通过邮箱地址 developers@mthreads.com 与我们取得联系，我们将尽力解答您的问题。
+## 5. FAQ
+如果您有任何问题，可以通过邮箱地址 developers@mthreads.com 与我们取得联系，我们将尽力解答您的问题

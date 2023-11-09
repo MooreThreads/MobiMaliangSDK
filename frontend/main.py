@@ -18,6 +18,7 @@ from io import BytesIO
 from config import *
 import warnings
 warnings.filterwarnings("ignore")
+os.environ["PYTORCH_MUSA_ALLOC_CONF"] = "max_split_size_mb:32"
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(__dir__))
