@@ -126,7 +126,7 @@ bash install_inside_docker.sh
 
 ### 1.5. 启动 WebUI
 
-如果在容器外面，确认命令行前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`，输入以下命令以进入容器
+如果在容器外面，输入以下命令以进入容器
 
 ```bash
 sudo docker exec -it mtai_workspace /bin/bash
