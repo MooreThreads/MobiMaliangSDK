@@ -28,14 +28,14 @@
 
 输入以下命令并回车，将会克隆项目并进入项目文件夹，此时命令行前缀变为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`
 
-```
+```bash
 git clone https://github.com/MooreThreads/MobiMaliangSDK;cd MobiMaliangSDK
 ```
 ### 1.2. 安装驱动
 
 输入以下命令，将会安装驱动 `musa_2.1.1-Ubuntu-dev_amd64.deb`
 
-```
+```bash
 sudo bash install_driver.sh
 ```
 
@@ -43,7 +43,7 @@ sudo bash install_driver.sh
 
 如果看到类似以下的驱动信息，则说明驱动安装成功；如果显示器分辨率没有变得更大，最好重启以确保驱动生效
 
-```
+```bash
 Package: musa
 Status: install ok installed
 Priority: optional
@@ -62,9 +62,7 @@ Homepage: https://developer.mthreads.com/
 
 请向 `developers@mthreads.com` 发送邮件，提供姓名、手机号、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
 
-申请成功后，请编辑 `install.sh` [第19行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install.sh#L19)，并替换`账号`和`密码`
-
-如果系统语言为中文，则编辑 `install_ch.sh` [第19行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install_cn.sh#L19)
+申请成功后，请编辑 `install.sh` [第18行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install.sh#L18)，并替换`账号`和`密码`
 
 ### 1.4. 其他安装
 
@@ -72,11 +70,9 @@ Homepage: https://developer.mthreads.com/
 
 输入以下命令，以完成后续安装
 
-```
+```bash
 sudo bash install.sh
 ```
-
-如果系统语言为中文，即命令行中 `Desktop` 显示为 `桌面` ，则运行 `sudo bash install_cn.sh`
 
 <details>
 <summary>以上安装文件将依次完成以下内容</summary>
@@ -90,41 +86,55 @@ sudo dpkg -i mtml_1.5.0.deb sgpu-dkms_1.1.1.deb mt-container-toolkit_1.5.0.deb
 > 具体参考 [摩尔线程容器运行时套件](https://mcconline.mthreads.com/software/1?id=1)
 
 - 登录 docker
+
 ```bash
 docker login -u 账号 -p 密码 registry.mthreads.com
 ```
 如未有账号，可以向 `developers@mthreads.com` 发送申请邮件
 
-- 拉取 docker 镜像 registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
+- 拉取 docker 镜像 `registry.mthreads.com/mcconline/musa-pytorch-release-public:latest`
+
 ```bash
 sudo docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
 ```
-
-- 创建容器 `mtai_workspace`并进入
-```bash
-docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
-docker exec -it mtai_workspace /bin/bash
-```
 </details>
+
+运行以下命令，创建容器 `mtai_workspace`
+
+```bash
+sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+```
+
+如果系统语言为中文，则运行以下命令
+
+```bash
+sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/桌面/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+```
+
+输入以下命令，进入容器 `mtai_workspace`
+
+```bash
+sudo docker exec -it mtai_workspace /bin/bash
+```
 
 此时命令行前缀变成类似 `(py38) root@xxxx`，说明已经进入容器了，运行以下两行命令完成安装，其中第一行进入到项目目录，第二行完成容器内安装任务
 
-```
+```bash
 cd /mtai_workspace/MobiMaliangSDK/
-sudo bash install_inside_docker.sh
+bash install_inside_docker.sh
 ```
 
 ### 1.5. 启动 WebUI
 
 如果在容器外面，确认命令行前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`，输入以下命令以进入容器
 
-```
+```bash
 sudo docker exec -it mtai_workspace /bin/bash
 ```
 
 如果已经在容器里了，输入以下命令，其中第一行进入到项目目录，第二行启动 WebUI 服务
 
-```
+```bash
 cd /mtai_workspace/MobiMaliangSDK/
 streamlit run frontend/main.py --server.port 1001
 ```
@@ -134,6 +144,8 @@ streamlit run frontend/main.py --server.port 1001
 如果要停止 WebUI 服务，按 `Ctrl + C` 即可；停止服务后，如果要退出容器，输入 `exit` 即可
 
 ### 1.6. 常用 docker 命令
+
+需要在容器外使用
 
 - `sudo docker images -a`：查看全部已下载的镜像
 - `sudo docker ps -a`：查看全部容器
@@ -150,7 +162,7 @@ streamlit run frontend/main.py --server.port 1001
   - 骨骼检测模型：[body_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/body_pose_model.pth)、[facenet.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/facenet.pth)、[hand_pose_model.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/hand_pose_model.pth)，分别实现全身、面部、手部的检测，下载后放至`models/controlnet/annotators/`
   - 边线检测模型：[mlsd_large_512_fp32.pth](https://huggingface.co/lllyasviel/Annotators/blob/main/mlsd_large_512_fp32.pth)，下载后放至`models/controlnet/annotators/`
 - LoRA: safetensors格式，可从tusiart.com、civitai.com等网站下载，下载后放至`models/lora/`
-- Textural Inversion：pt格式，可从tusi.art、civitai.com等网站下载，下载后放至`models/embeddings/`
+- Textural Inversion：pt格式，可从tusiart.com、civitai.com等网站下载，下载后放至`models/embeddings/`
 - 超分: [RealESRGAN_x4plus](https://github.com/xinntao/Real-ESRGAN)，更多下载链接：[https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth](https://huggingface.co/schwgHao/RealESRGAN_x4plus/blob/main/RealESRGAN_x4plus.pth)，下载后放至`models/tools/`
 - 图生文本：[DeepDanbooru](https://github.com/KichangKim/DeepDanbooru)，更多下载链接：[https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt](https://huggingface.co/Renqf/model-resnet_custom_v3.pt/blob/main/model-resnet_custom_v3.pt)，下载后放至`models/tools/`
 - 翻译: 支持中文prompt和negative prompt，请下载[https://huggingface.co/Helsinki-NLP/opus-mt-zh-en/blob/main/pytorch_model.bin](https://huggingface.co/Helsinki-NLP/opus-mt-zh-en/blob/main/pytorch_model.bin)，下载后放至`models/tools/zh2en/`
@@ -186,7 +198,7 @@ python examples/example_img2img.py --checkpoint_path models/Stable-diffusion/v1-
 # python examples/controlnets/example_canny2img.py --checkpoint_path <your model path> --canny_controlnet_path <your canny controlnet model path> --image_path <your image path> --prompt <your prompt> --output_path <result saved path>
 python examples/controlnets/example_canny2img.py --checkpoint_path models/Stable-diffusion/v1-5-pruned-emaonly.ckpt --canny_controlnet_path models/controlnet/canny_v11 --image_path data/person.jpg --prompt "a pretty girl" --output_path outputs
 ```
-更多的 controlnets 请移步 ```examples/controlnets``` 文件夹
+更多的 controlnets 请移步 `examples/controlnets` 文件夹
 
 </details>
 
