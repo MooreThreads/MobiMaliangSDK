@@ -15,7 +15,7 @@ __pycache__
 *.safetensors
 *.pth
 *.bin
-*.pt
+# *.pt
 # Initially taken from Github's Python gitignore file
 
 # Byte-compiled / optimized / DLL files
