@@ -58,13 +58,7 @@ Conflicts: mtsnd, mtgpu, musa-wine, musa_all-in-one
 Description: Moore Threads MUSA driver
 Homepage: https://developer.mthreads.com/
 ```
-### 1.3. 开发者账号
-
-请向 `developers@mthreads.com` 发送邮件，提供姓名、手机号、行业等基本信息，以申请开发者账号，用于拉取运行 `torch_musa` 所需的镜像
-
-申请成功后，请编辑 `install.sh` [第18行](https://github.com/MooreThreads/MobiMaliangSDK/blob/main/install.sh#L18)，并替换`账号`和`密码`
-
-### 1.4. 其他安装
+### 1.3. 其他安装
 
 如果重启了，请打开 `MobiMaliangSDK` 文件夹，点击右键，选择 `Open in Terminal`，以重新进入命令行，前缀为：`~/Desktop/mtai_workspace/MobiMaliangSDK$`
 
@@ -85,13 +79,6 @@ sudo dpkg -i mtml_1.5.0.deb sgpu-dkms_1.1.1.deb mt-container-toolkit_1.5.0.deb
 ```
 > 具体参考 [摩尔线程容器运行时套件](https://mcconline.mthreads.com/software/1?id=1)
 
-- 登录 docker
-
-```bash
-docker login -u 账号 -p 密码 registry.mthreads.com
-```
-如未有账号，可以向 `developers@mthreads.com` 发送申请邮件
-
 - 拉取 docker 镜像 `registry.mthreads.com/mcconline/musa-pytorch-release-public:latest`
 
 ```bash
@@ -102,13 +89,13 @@ sudo docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:lat
 运行以下命令，创建容器 `mtai_workspace`
 
 ```bash
-sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/Desktop/mtai_workspace:/mtai_workspace:rw --shm-size 16G registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
 ```
 
 如果系统语言为中文，则运行以下命令
 
 ```bash
-sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/桌面/mtai_workspace:/mtai_workspace:rw --shm-size 64G registry.mthreads.com/mcconline/musa-pytorch-release-public:v1.0.0
+sudo docker run -id --name mtai_workspace --privileged -e MTHREADS_VISIBLE_DEVICES=all -p 1001:1001 -p 1002:1002 -p 1003:1003 -p 1004:1004 -p 1005:1005 -v ~/桌面/mtai_workspace:/mtai_workspace:rw --shm-size 16G registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
 ```
 
 输入以下命令，进入容器 `mtai_workspace`
@@ -124,7 +111,7 @@ cd /mtai_workspace/MobiMaliangSDK/
 bash install_inside_docker.sh
 ```
 
-### 1.5. 启动 WebUI
+### 1.4. 启动 WebUI
 
 如果在容器外面，输入以下命令以进入容器
 
@@ -143,7 +130,7 @@ streamlit run frontend/main.py --server.port 1001
 
 如果要停止 WebUI 服务，按 `Ctrl + C` 即可；停止服务后，如果要退出容器，输入 `exit` 即可
 
-### 1.6. 常用 docker 命令
+### 1.5. 常用 docker 命令
 
 需要在容器外使用
 
