@@ -15,5 +15,4 @@ rm mt-container-toolkit_1.5.0.deb
 apt-get install git -y
 apt-get install docker -y
 apt-get install docker.io -y
-docker login -u 账号 -p 密码 registry.mthreads.com
 docker pull registry.mthreads.com/mcconline/musa-pytorch-release-public:latest
